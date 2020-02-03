@@ -1,0 +1,15 @@
+set(MainWindowSrc
+	KikooRenderer.cpp
+	Image.cpp
+	Ray.cpp
+	Shape/Triangle.cpp
+	Shape/Sphere.cpp
+	Sample.cpp
+	)
+
+add_executable(MainWindow ${MainWindowSrc})
+
+install(TARGETS MainWindow
+		RUNTIME DESTINATION bin
+		COMPONENT MainWindowDist
+)
