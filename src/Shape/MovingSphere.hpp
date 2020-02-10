@@ -3,16 +3,20 @@
 #include "Shape.hpp"
 #include "Common/CommonIncludes.hpp"
 
-class Sphere : public Shape {
+class MovingSphere : public Shape {
 public : 
-    Sphere(const vector3& center, real radius, const rgb& color);
-    BoundingBox GetBoundingBox() const;    
+    MovingSphere(const vector3& center, real radius, const rgb& color, real minTime, real maxTime);
+    BoundingBox GetBoundingBox() const;
     
     bool Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const;
     bool ShadowHit(Ray r, real tmin, real tmax, real time) const;
 
+    vector3 GetCenter(real time) const;
+
 private: 
     vector3 center;
     real radius;
-    rgb color;
+    rgb color;    
+
+    real minTime, maxTime;
 };

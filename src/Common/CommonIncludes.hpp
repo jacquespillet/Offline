@@ -8,7 +8,7 @@
 #define GLM_FORCE_INLINE 
 //#define GLM_FORCE_SSE2
 #define GLM_FORCE_AVX
-#include <glm/vec3.hpp> // glm::vec3
+#include <glm/vec3.hpp> // vector3
 #include <glm/vec4.hpp> // glm::vec4, glm::ivec4
 #include <glm/mat4x4.hpp> // glm::mat4
 #include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
@@ -36,5 +36,11 @@
 #include <random>
 
 
-typedef float real;
-typedef glm::vec3  rgb;
+typedef double real;
+typedef glm::dvec4 vector4;
+typedef glm::dvec3 vector3;
+typedef glm::dvec2 vector2;
+typedef glm::dmat3 matrix3;
+typedef glm::dmat4 matrix4;
+
+typedef vector3  rgb;

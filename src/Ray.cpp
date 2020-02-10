@@ -2,7 +2,7 @@
 
 Ray::Ray(){}
 
-Ray::Ray(const glm::vec3& origin, const glm::vec3& direction) {
+Ray::Ray(vector3 origin, vector3 direction) {
     this->origin = origin;
     this->direction = direction;
 }
@@ -12,14 +12,14 @@ Ray::Ray(const Ray& r) {
     this->direction = r.direction;
 }
 
-glm::vec3 Ray::Origin() const {
+vector3 Ray::Origin() const {
     return origin;
 }
 
-glm::vec3 Ray::Direction() const {
+vector3 Ray::Direction() const {
     return direction;
 }
 
-glm::vec3 Ray::PointAt(real t) const {
+vector3 Ray::PointAt(real t) const {
     return origin + t * direction;
 }

@@ -39,11 +39,11 @@ include_directories(${GLM_INC_DIR})
 # link_directories(${BULLET_LIB_DIR})
 
 # #assimp
-# set(ASSIMP_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/assimp-4.1.0/build/install/include)
-# set(ASSIMP_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/assimp-4.1.0/build/install/lib)
-# set(ASSIMP_BIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/assimp-4.1.0/build/install/bin)
-# include_directories(${ASSIMP_INC_DIR})
-# link_directories(${ASSIMP_LIB_DIR})
+set(ASSIMP_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/assimp-4.1.0/build/install/include)
+set(ASSIMP_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/assimp-4.1.0/build/install/lib)
+set(ASSIMP_BIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/assimp-4.1.0/build/install/bin)
+include_directories(${ASSIMP_INC_DIR})
+link_directories(${ASSIMP_LIB_DIR})
 
 # #CTPL
 # set(CTPL_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/CTPL-master)
@@ -99,7 +99,7 @@ install(FILES ${QT_BIN_DIR}/Qt5Core.dll
 # 		COMPONENT MainWindowDist
 # )
 
-# install(FILES ${ASSIMP_BIN_DIR}/assimp-vc140-mt.dll
-# 		DESTINATION bin
-# 		COMPONENT MainWindowDist
-# )
+install(FILES ${ASSIMP_BIN_DIR}/assimp-vc141-mt.dll
+		DESTINATION bin
+		COMPONENT MainWindowDist
+)

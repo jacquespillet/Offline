@@ -2,19 +2,19 @@
 
 #include "Common/CommonIncludes.hpp"
 
-void Random(std::vector<glm::vec2>& samples, int numSamples);
-void Jitter(std::vector<glm::vec2>& samples, int numSamples);
-void NRooks(std::vector<glm::vec2>& samples, int numSamples);
-void MultiJitter(std::vector<glm::vec2>& samples, int numSamples);
-void Shuffle(std::vector<glm::vec2>& samples, int numSamples);
+void Random(std::vector<vector2>& samples, int numSamples);
+void Jitter(std::vector<vector2>& samples, int numSamples);
+void NRooks(std::vector<vector2>& samples, int numSamples);
+void MultiJitter(std::vector<vector2>& samples, int numSamples);
+void Shuffle(std::vector<vector2>& samples, int numSamples);
 
-void BoxFilter(std::vector<glm::vec2>& samples, int numSamples);
-void TentFilter(std::vector<glm::vec2>& samples, int numSamples);
-void CubicSplineFilter(std::vector<glm::vec2>& samples, int numSamples);
+void BoxFilter(std::vector<vector2>& samples, int numSamples);
+void TentFilter(std::vector<vector2>& samples, int numSamples);
+void CubicSplineFilter(std::vector<vector2>& samples, int numSamples);
 
-void Random(std::vector<float>& samples, int numSamples);
-void Jitter(std::vector<float>& samples, int numSamples);
-void Shuffle(std::vector<float>& samples, int numSamples);
+void Random(std::vector<real>& samples, int numSamples);
+void Jitter(std::vector<real>& samples, int numSamples);
+void Shuffle(std::vector<real>& samples, int numSamples);
 
 inline real GetRand() {
     return ((real)std::rand() / (real)RAND_MAX);

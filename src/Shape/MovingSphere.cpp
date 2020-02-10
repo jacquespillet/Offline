@@ -1,20 +1,23 @@
-#include "Sphere.hpp"
+#include "MovingSphere.hpp"
 
+MovingSphere::MovingSphere(const vector3& center, real radius, const rgb& color, real minTime, real maxTime)  : center(center), radius(radius), color(color), minTime(minTime), maxTime(maxTime) {}
 
-Sphere::Sphere(const vector3& center, real radius, const rgb& color) : center(center), radius(radius), color(color) {}
-
-BoundingBox Sphere::GetBoundingBox() const {
+BoundingBox MovingSphere::GetBoundingBox() const {
     BoundingBox bb = {
         vector3(-radius),
         vector3(radius)
     };
 
     return bb;
-}   
+}
 
+vector3 MovingSphere::GetCenter(real time) const {
+    real realtime = time * maxTime + (1.0f - time) * minTime;
+    return center + realtime * 0.5;
+}
 
-bool Sphere::Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const {
-    vector3 oc = r.Origin() - center;
+bool MovingSphere::Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const {
+    vector3 oc = r.Origin() - GetCenter(time);
 
     real a = glm::dot(r.Direction(), r.Direction());
     real b = 2 * dot(oc, r.Direction());
@@ -50,13 +53,13 @@ bool Sphere::Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const {
             hit.color = color;
             hit.uvw = uvw;
             hit.t = t;
+            return true;
         }
     }
-    return false;    
+    return false;        
 }
-
-bool Sphere::ShadowHit(Ray r, real tmin, real tmax, real time) const {
-    vector3 oc = r.Origin() - center;
+bool MovingSphere::ShadowHit(Ray r, real tmin, real tmax, real time) const {
+    vector3 oc = r.Origin() - GetCenter(time);
     
     real a = glm::dot(r.Direction(), r.Direction());
     real b = 2 * dot(oc, r.Direction());
@@ -77,6 +80,5 @@ bool Sphere::ShadowHit(Ray r, real tmin, real tmax, real time) const {
         }
     }
 
-    return false;  
+    return false;      
 }
-

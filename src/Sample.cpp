@@ -1,7 +1,7 @@
 #include "Sample.hpp"
 
 
-void Random(std::vector<glm::vec2>& samples, int numSamples) {
+void Random(std::vector<vector2>& samples, int numSamples) {
     if(samples.size() != numSamples) samples.resize(numSamples);
 
     for(int i=0; i<numSamples; i++) {
@@ -11,7 +11,7 @@ void Random(std::vector<glm::vec2>& samples, int numSamples) {
 }
 
 
-void Jitter(std::vector<glm::vec2>& samples, int numSamples) {
+void Jitter(std::vector<vector2>& samples, int numSamples) {
     if(samples.size() != numSamples) samples.resize(numSamples);
 
     int sqrtSamples = (int)(std::sqrt(numSamples));
@@ -27,7 +27,7 @@ void Jitter(std::vector<glm::vec2>& samples, int numSamples) {
     }
 }
 
-void NRooks(std::vector<glm::vec2>& samples, int numSamples) {
+void NRooks(std::vector<vector2>& samples, int numSamples) {
     if(samples.size() != numSamples) samples.resize(numSamples);
 
     //Put samples on diagonal
@@ -46,7 +46,7 @@ void NRooks(std::vector<glm::vec2>& samples, int numSamples) {
     }
 }
 
-void MultiJitter(std::vector<glm::vec2>& samples, int numSamples) {
+void MultiJitter(std::vector<vector2>& samples, int numSamples) {
     if(samples.size() != numSamples) samples.resize(numSamples);
 
     int sqrtSamples = (int)std::sqrt(numSamples);
@@ -75,10 +75,10 @@ void MultiJitter(std::vector<glm::vec2>& samples, int numSamples) {
     }
 }
 
-void Shuffle(std::vector<glm::vec2>& samples, int numSamples) {
+void Shuffle(std::vector<vector2>& samples, int numSamples) {
     for(int i=numSamples-2; i>=0; i--) {
         int target  = (int)(GetRand() * (real)i);
-        glm::vec2 tmp = samples[i+1];
+        vector2 tmp = samples[i+1];
         samples[i+1] = samples[target];
         samples[target] = tmp;
     }
@@ -86,7 +86,7 @@ void Shuffle(std::vector<glm::vec2>& samples, int numSamples) {
 
 
 //Resample from 0->1 to -0.5 -> 0.5
-void BoxFilter(std::vector<glm::vec2>& samples, int numSamples) {
+void BoxFilter(std::vector<vector2>& samples, int numSamples) {
     for(int i=0; i<numSamples; i++) {
         samples[i].x = samples[i].x-0.5f;
         samples[i].y = samples[i].y-0.5f;
@@ -94,7 +94,7 @@ void BoxFilter(std::vector<glm::vec2>& samples, int numSamples) {
 }
 
 //Resample from 0->1 to -0.5 -> 0.5 using tent filter
-void TentFilter(std::vector<glm::vec2>& samples, int numSamples) {
+void TentFilter(std::vector<vector2>& samples, int numSamples) {
     for(int i=0; i<numSamples; i++) {
         real x = samples[i].x;
         real y = samples[i].y;
@@ -108,7 +108,7 @@ void TentFilter(std::vector<glm::vec2>& samples, int numSamples) {
 }
 
 //Resample from 0->1 to -0.5 -> 0.5 using cubic spline filter
-void CubicSplineFilter(std::vector<glm::vec2>& samples, int numSamples) {
+void CubicSplineFilter(std::vector<vector2>& samples, int numSamples) {
     for(int i=0; i<numSamples; i++) {
         real x = samples[i].x;
         real y = samples[i].y;
@@ -118,7 +118,7 @@ void CubicSplineFilter(std::vector<glm::vec2>& samples, int numSamples) {
     }
 }
 
-void Random(std::vector<float>& samples, int numSamples) {
+void Random(std::vector<real>& samples, int numSamples) {
     if(samples.size() != numSamples) samples.resize(numSamples);
 
     for(int i=0; i<numSamples; i++) {
@@ -126,7 +126,7 @@ void Random(std::vector<float>& samples, int numSamples) {
     }
 }
 
-void Jitter(std::vector<float>& samples, int numSamples) {
+void Jitter(std::vector<real>& samples, int numSamples) {
     if(samples.size() != numSamples) samples.resize(numSamples);
 
     for(int i=0; i<numSamples; i++) {
@@ -134,7 +134,7 @@ void Jitter(std::vector<float>& samples, int numSamples) {
     }
 }
 
-void Shuffle(std::vector<float>& samples, int numSamples) {
+void Shuffle(std::vector<real>& samples, int numSamples) {
     for(int i=numSamples-2; i>=0; i--) {
         int target = (int)(GetRand() * (real)i);
         real temp =samples[i+1];

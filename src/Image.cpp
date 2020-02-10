@@ -31,7 +31,7 @@ void Image::gammaCorrect(real gamma) {
     real power = 1.0 / gamma;
     for(int i=0; i<pixels.size(); ++i) {
         temp = pixels[i];
-        pixels[i] = glm::pow(glm::vec3(0), glm::vec3(power));
+        pixels[i] = glm::pow(temp, vector3(power));
     }
 }
 
@@ -41,9 +41,9 @@ void Image::WritePPM(const std::string& fileName) const {
     fs << "P3\n" << width << " " << height << "\n255\n";
     
     for(int i=pixels.size(); i>=0; i--) {
-        int r = std::min(pixels[i].x * 256, 255.0f);
-        int g = std::min(pixels[i].y * 256, 255.0f);
-        int b = std::min(pixels[i].z * 256, 255.0f);
+        int r = std::min(pixels[i].x * 256, 255.0);
+        int g = std::min(pixels[i].y * 256, 255.0);
+        int b = std::min(pixels[i].z * 256, 255.0);
 
         fs << r << " " << g << " " << b << "\n";
 

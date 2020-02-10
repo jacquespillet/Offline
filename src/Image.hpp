@@ -12,7 +12,7 @@ public:
 
     bool set(int x, int y, const rgb& color);
 
-    void gammaCorrect(float gamma);
+    void gammaCorrect(real gamma);
 
     void WritePPM(const std::string& filename) const;
 

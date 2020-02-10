@@ -3,11 +3,20 @@ set(MainWindowSrc
 	Image.cpp
 	Ray.cpp
 	Shape/Triangle.cpp
+	Shape/TriangleMesh.cpp
 	Shape/Sphere.cpp
+	Shape/MovingSphere.cpp
+	Shape/Instance.cpp
 	Sample.cpp
+	Camera.cpp
+	Common/ModelLoader.hpp
+	ONB.cpp
 	)
 
-add_executable(MainWindow ${MainWindowSrc})
+	
+	add_executable(MainWindow ${MainWindowSrc})
+	
+	target_link_libraries(MainWindow assimp-vc141-mt)
 
 install(TARGETS MainWindow
 		RUNTIME DESTINATION bin

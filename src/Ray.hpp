@@ -5,14 +5,14 @@
 class Ray {
 public : 
     Ray();
-    Ray(const glm::vec3& origin, const glm::vec3& direction);
+    Ray(vector3 origin, vector3 direction);
     Ray(const Ray& r);
 
-    glm::vec3 Origin() const;
-    glm::vec3 Direction() const;
-    glm::vec3 PointAt(real t) const;
+    vector3 Origin() const;
+    vector3 Direction() const;
+    vector3 PointAt(real t) const;
 
 private:
-    glm::vec3 origin;
-    glm::vec3 direction;
+    vector3 origin;
+    vector3 direction;
 };
