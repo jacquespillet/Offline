@@ -3,11 +3,7 @@
 MovingSphere::MovingSphere(const vector3& center, real radius, const rgb& color, real minTime, real maxTime)  : center(center), radius(radius), color(color), minTime(minTime), maxTime(maxTime) {}
 
 BoundingBox MovingSphere::GetBoundingBox() const {
-    BoundingBox bb = {
-        vector3(-radius),
-        vector3(radius)
-    };
-
+    BoundingBox bb( vector3(-radius), vector3(radius));
     return bb;
 }
 

@@ -8,11 +8,7 @@ TriangleMesh::TriangleMesh(const std::string& fileName) {
 }
 
 BoundingBox TriangleMesh::GetBoundingBox() const {
-    BoundingBox bb = {
-        min,
-        max
-    };
-
+    BoundingBox bb( min, max);
     return bb;
 }
 

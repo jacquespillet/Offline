@@ -13,7 +13,10 @@ public :
 
     bool Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const;
     bool ShadowHit(Ray r, real tmin, real tmax, real time) const;
-    
+
+    BoundingBox GetBoundingBox() const;    
+
+
     glm::mat4 M;
     glm::mat4 N;
     Shape* prim;

@@ -2,9 +2,11 @@ set(MainWindowSrc
 	KikooRenderer.cpp
 	Image.cpp
 	Ray.cpp
+	BoundingBox.cpp
 	Shape/Triangle.cpp
 	Shape/TriangleMesh.cpp
 	Shape/Sphere.cpp
+	Shape/BVH.cpp
 	Shape/MovingSphere.cpp
 	Shape/Instance.cpp
 	Sample.cpp

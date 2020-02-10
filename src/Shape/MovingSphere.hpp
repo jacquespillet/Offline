@@ -3,6 +3,7 @@
 #include "Shape.hpp"
 #include "Common/CommonIncludes.hpp"
 
+
 class MovingSphere : public Shape {
 public : 
     MovingSphere(const vector3& center, real radius, const rgb& color, real minTime, real maxTime);

@@ -2,6 +2,7 @@
 
 #include "Shape.hpp"
 #include "Common/CommonIncludes.hpp"
+#include "BoundingBox.hpp"
 
 class Sphere : public Shape {
 public : 

@@ -9,6 +9,7 @@ public:
 
     bool Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const;
     bool ShadowHit(Ray r, real tmin, real tmax, real time) const;
+    BoundingBox GetBoundingBox() const;    
 
 private:
     vector3 p0, p1, p2;

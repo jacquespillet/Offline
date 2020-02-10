@@ -4,11 +4,7 @@
 Sphere::Sphere(const vector3& center, real radius, const rgb& color) : center(center), radius(radius), color(color) {}
 
 BoundingBox Sphere::GetBoundingBox() const {
-    BoundingBox bb = {
-        vector3(-radius),
-        vector3(radius)
-    };
-
+    BoundingBox bb(vector3(-radius), vector3(radius));
     return bb;
 }   
 

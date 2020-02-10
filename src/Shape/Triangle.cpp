@@ -66,3 +66,7 @@ bool Triangle::ShadowHit(Ray r, real tmin, real tmax, real time) const {
 
     return (t >= tmin && t <= tmax);
 }
+
+BoundingBox Triangle::GetBoundingBox() const {
+    return BoundingBox(glm::min(p0, glm::min(p1, p2)), glm::max(p0, glm::max(p1, p2)));
+}

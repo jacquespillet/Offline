@@ -32,3 +32,14 @@ bool Instance::ShadowHit(Ray r, real tmin, real tmax, real time) const {
     return prim->ShadowHit(tRay, tmin, tmax, time);
 }
 
+
+BoundingBox Instance::GetBoundingBox() const {
+    BoundingBox bbox = prim->GetBoundingBox();
+    vector3 min = bbox.Min();
+    vector3 max = bbox.Max();
+
+    min = M * vector4(min, 1);
+    max = M * vector4(max, 1);
+
+    return BoundingBox(glm::min(min, max), glm::max(min, max));
+}

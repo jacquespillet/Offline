@@ -4,11 +4,7 @@
 
 #include "Ray.hpp"
 #include "ONB.hpp"
-
-struct BoundingBox {
-    vector3 min;
-    vector3 max;
-};
+#include "BoundingBox.hpp"
 
 struct HitPoint {
     real t;
@@ -21,4 +17,5 @@ class Shape {
 public: 
     virtual bool Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const=0;
     virtual bool ShadowHit(Ray r, real tmin, real tmax, real time) const=0;
+    virtual BoundingBox GetBoundingBox() const=0;
 };
