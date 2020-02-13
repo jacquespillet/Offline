@@ -31,10 +31,11 @@ bool Triangle::Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const 
         vector3 normal = glm::normalize(glm::cross(p1-p0, p2-p0));
         uvw.InitFromW(normal);
 
-        hit.p = hitPosition;
-        hit.color = color;
-        hit.uvw = uvw;
         hit.t = t;
+        hit.p = hitPosition;
+        hit.uvw = uvw;
+        hit.color = color;
+        hit.material = material;
 
         return true;
     }

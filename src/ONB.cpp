@@ -33,14 +33,16 @@ void ONB::InitFromV(const vector3& v) {
     W = glm::cross(U, V);
 }
 void ONB::InitFromW(const vector3& w) {
-    vector3 n(1, 0, 0);
-    vector3 m(0, 1, 0);
-    W = glm::normalize(w);
-    U = glm::cross(W, n);
+	vector3 n(1.0f, 0.0f, 0.0f);
+	vector3 m(0.0f, 1.0f, 0.0f);
 
-    if(glm::length2(U) < ONB_EPSILON) U = glm::cross(W, m);
+	W = glm::normalize(w);
+	U = glm::cross(W, n);
 
+	if (glm::length2(U) < ONB_EPSILON) U = glm::cross(W, m);
+	
     V = glm::cross(W, U);
+    
 }
 
 void ONB::InitFromUV(const vector3& u, const vector3& v) {

@@ -8,84 +8,57 @@
 #include "Shape/TriangleMesh.hpp"
 #include "Shape/Instance.hpp"
 
+#include "Material/EmissiveMaterial.hpp"
+#include "Material/DiffuseMaterial.hpp"
+#include "Material/MetalMaterial.hpp"
+
 #include "Ray.hpp"
-#include "Sample.hpp"
 #include "Camera.hpp"
 
+#include "Renderer.hpp"
 
 int main(int argc, char *argv[])
 {
-	Triangle t(vector3(1, 0, 0), vector3(-1, 0, 0), vector3(0, 1, 0), rgb(1, 0, 0));
-	MovingSphere s(vector3(0, 0, 0), 1, rgb(0, 1, 0), 0, 1);
-	TriangleMesh m("untitled.obj");
+	Renderer renderer;
 
-	matrix4 transform(1);
-	transform = glm::rotate(transform, 0.4, vector3(0, 1, 0));
-	transform = glm::translate(transform, vector3(1, 0, 0));
-	Instance i(transform, &m);
+	//Set shapes
+	EmissiveMaterial emissive(rgb(1, 0, 1), (real)3.0);
+	DiffuseMaterial diffuse(rgb(0.7));
+	MetalMaterial metal(rgb(0.7), 8);
 
-	
+	Triangle t(vector3(-2, 1.5, 0), vector3(2, 1.5, 0), vector3(0, 1.5, 2), rgb(1, 0, 0));
+	t.material = &emissive;
 
+	TriangleMesh m0("Cube.obj");
+	m0.material = &diffuse;
+	matrix4	transform0 = glm::translate(matrix4(1), vector3(-2, 0.5, -0.5));
+	Instance i0(transform0, &m0);
+
+	TriangleMesh m1("Cube.obj");
+	m1.material = &metal;
+	matrix4	transform1 = glm::translate(matrix4(1), vector3(2, -0.5, 0.5));
+	Instance i1(transform1, &m1);
+
+	renderer.shapes.push_back(&i0);
+	renderer.shapes.push_back(&i1);
+	renderer.shapes.push_back(&t);
+
+
+	//Set image
 	int width = 300;
 	int height = 300;
 	Image img(width, height, rgb(0, 0, 0));
 	
-	int numSamples = 1;
-	std::vector<vector2> pixelSamples(numSamples);
-	Random(pixelSamples, numSamples);
-	BoxFilter(pixelSamples, numSamples);
-	
-	std::vector<vector2> lensSamples(numSamples);
-	Random(lensSamples, numSamples);
-	
-	std::vector<real> timeSamples(numSamples);
-	Random(timeSamples, numSamples);
-
-	std::vector<Shape*> shapes;
-	// shapes.push_back(&t);
-	// shapes.push_back(&s);
-	shapes.push_back(&i);
-
-	//1. Create the camera 
-	vector3 camPos = vector3(0, 0, 2);
+	//Set camera
+	vector3 camPos = vector3(0, 2, 5);
 	vector3 lookAt = vector3(0, 0, 0);
 	double distanceToFocus = glm::distance(camPos, lookAt);
 	Camera camera(camPos, lookAt, vector3(0, 1, 0), 70, (double)width/(double)height, 0.0001, distanceToFocus, 0, 1);
+	
 
-	for(int i=0; i<width * height; i++) {
-		int x = i % width;
-		int y = i / width;
+	int numSamples = 256;
+	renderer.Render(img, camera, numSamples);
 
-		if(x ==0) std::cout << y << " / " << height << std::endl;
-
-		rgb color(0);
-		real inverseNumSamples = 1.0 / (real)numSamples;
-		for(int j=0; j<numSamples; j++) {
-			real correctedX = pixelSamples[j].x + x;
-			real correctedY = pixelSamples[j].y + y;
-			Ray r = camera.GetRay((real)x/(real)width, (real)y/(real)height, lensSamples[j].x, lensSamples[j].y);
-
-			//Find color
-			real closest = std::numeric_limits<real>::max();
-			HitPoint closestHit;
-			closestHit.t = -1;
-			for(int i=0; i<shapes.size(); i++) {
-				HitPoint h;
-				bool hit=false;
-				hit = shapes[i]->Hit(r, 0.0001, 1000, timeSamples[j], h);
-				if(hit && h.t < closest) {
-					closest = h.t;
-					closestHit = h;
-				}
-			}
-
-			if(closestHit.t > 0) color += closestHit.color * inverseNumSamples;
-		}
-
-		color = glm::min(vector3(1.0f), glm::max(vector3(0.0f), color));
-		img.set(x, y, color);
-	}
-	img.gammaCorrect(2.2);
-	img.WritePPM("Test.ppm");
+	
 	return 1;
 }

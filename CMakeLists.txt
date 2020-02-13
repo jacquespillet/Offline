@@ -46,8 +46,8 @@ include_directories(${ASSIMP_INC_DIR})
 link_directories(${ASSIMP_LIB_DIR})
 
 # #CTPL
-# set(CTPL_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/CTPL-master)
-# include_directories(${CTPL_INC_DIR})
+set(CTPL_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/CTPL-master)
+include_directories(${CTPL_INC_DIR})
 
 include_directories(src)
 add_subdirectory(src)

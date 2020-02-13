@@ -98,20 +98,22 @@ bool TriangleMesh::Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) co
     }            
     
     
-    if(isect)  {
+    if(isect && tNear > tmin && tNear < tmax)  {
         vector3 hitPosition = r.PointAt(tNear);
+        
         // vector2 uv = GetUv(hitPosition);
         ONB uvw;
         uvw.InitFromW(hitNormal);
 
-        hit.p = hitPosition;
-        hit.color = hitNormal;
-        hit.uvw = uvw;
         hit.t = tNear;    
+        hit.p = hitPosition;
+        hit.uvw = uvw;
+        hit.color = uvw.U;
+        hit.material = material;
 
         return true;
     }
-    else return false;
+    return false;
 }
 
 bool TriangleMesh::ShadowHit(Ray r, real tmin, real tmax, real time) const {

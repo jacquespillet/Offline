@@ -16,6 +16,8 @@ public:
 
     void WritePPM(const std::string& filename) const;
 
+    int GetWidth() const;
+    int GetHeight() const;
 private:
     imageData pixels;
     int width;

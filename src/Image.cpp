@@ -16,8 +16,17 @@ Image::Image(int width, int height, const rgb& background) {
     pixels = imageData(width*height, background);
 }
 
+int Image::GetWidth() const {
+    return width;
+}
+int Image::GetHeight() const {
+    return height;
+}
+
+
 bool Image::set(int x, int y, const rgb& color) {
-    uint64_t inx = y * width + x;
+    
+    uint64_t inx = ((height - 1 - y) * width) + x;
     if(x < 0 || x > width) return false;
     if(y < 0 || y > height) return false;
 
@@ -40,7 +49,7 @@ void Image::WritePPM(const std::string& fileName) const {
 
     fs << "P3\n" << width << " " << height << "\n255\n";
     
-    for(int i=pixels.size(); i>=0; i--) {
+    for(int i=0; i<pixels.size(); i++) {
         int r = std::min(pixels[i].x * 256, 255.0);
         int g = std::min(pixels[i].y * 256, 255.0);
         int b = std::min(pixels[i].z * 256, 255.0);

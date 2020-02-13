@@ -1,5 +1,6 @@
 set(MainWindowSrc
 	KikooRenderer.cpp
+	Renderer.cpp
 	Image.cpp
 	Ray.cpp
 	BoundingBox.cpp
@@ -11,8 +12,14 @@ set(MainWindowSrc
 	Shape/Instance.cpp
 	Sample.cpp
 	Camera.cpp
-	Common/ModelLoader.hpp
 	ONB.cpp
+	
+	Common/ModelLoader.hpp
+	Common/ThreadingUtil.cpp
+	
+	Material/DiffuseMaterial.cpp
+	Material/EmissiveMaterial.cpp
+	Material/MetalMaterial.cpp
 	)
 
 	
