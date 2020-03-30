@@ -25,3 +25,8 @@ bool MetalMaterial::SpecularDirection(const ONB& onb, const vector3& incident,  
     
     return glm::dot(outGoing, onb.W) > 0;
 }
+
+bool MetalMaterial::DiffuseDirection(const ONB& onb, const vector3& incident, const vector2& random, rgb& outAlbedo, vector3& outGoing, real& pdf, real& brdf) {
+    return SpecularDirection(onb, incident, random, outAlbedo, outGoing, pdf);
+}
+

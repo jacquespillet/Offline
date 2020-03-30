@@ -11,7 +11,7 @@ bool DiffuseMaterial::ExplicitBrdf(const ONB& onb, const vector3& outGoing0, con
     return true;
 }
 
-bool DiffuseMaterial::DiffuseDirection(const ONB& onb, const vector3& incident, const vector2& random, rgb& outAlbedo, vector3& outGoing, real& pdf) {
+bool DiffuseMaterial::DiffuseDirection(const ONB& onb, const vector3& incident, const vector2& random, rgb& outAlbedo, vector3& outGoing, real& pdf, real& brdf) {
     real pi = 3.14159265359;
     real phi = 2 * pi * random.x;
     real r = sqrt(random.y);
@@ -25,6 +25,7 @@ bool DiffuseMaterial::DiffuseDirection(const ONB& onb, const vector3& incident, 
     float cosine = glm::dot(outGoing,onb.W);
     if(cosine < 0) cosine=0;
     pdf = cosine / pi;
+    brdf=1;
 
     return true;
 }

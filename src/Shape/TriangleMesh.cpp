@@ -5,6 +5,17 @@
 TriangleMesh::TriangleMesh(const std::string& fileName) {
     color = vector3(0, 0, 1);
     LoadModel(fileName, &vertices, &normals, &uv, &triangles);
+
+    min=glm::vec3(std::numeric_limits<real>::max());
+    max=glm::vec3(-std::numeric_limits<real>::max());
+
+    for(int i=0; i<vertices.size(); i++) {
+        min = glm::min(vertices[i], min);
+        max = glm::max(vertices[i], max);
+    }
+
+    std::cout << glm::to_string(min) << std::endl;
+    std::cout << glm::to_string(max) << std::endl;
 }
 
 BoundingBox TriangleMesh::GetBoundingBox() const {
@@ -73,47 +84,50 @@ void TriangleMesh::GetSurfaceProperties(
 }
 
 bool TriangleMesh::Hit(Ray r, real tmin, real tmax, real time, HitPoint& hit) const {
-    bool isect = false;
-    vector2 uv;
+    if(GetBoundingBox().RayIntersects(r, tmin, tmax)) {
+        bool isect = false;
+        vector2 uv;
 
-    vector3 hitNormal;
-    vector3 hitTangent;
-    vector3 hitBitangent;
-    vector2 hitUv;
+        vector3 hitNormal;
+        vector3 hitTangent;
+        vector3 hitBitangent;
+        vector2 hitUv;
 
 
-    real tNear = 999999;
-    for (uint32_t i = 0; i < triangles.size(); i+=3) { 
-        const vector3 &v0 = vertices[triangles[i]]; 
-        const vector3 &v1 = vertices[triangles[i + 1]]; 
-        const vector3 &v2 = vertices[triangles[i + 2]]; 
-        real t = tNear, u, v; 
-        if (RayTriangleIntersect(r, v0, v1, v2, t, u, v) && t < tNear) { 
-            tNear = t; 
-            uv.x = u; 
-            uv.y = v; 
-            isect = true; 
-            GetSurfaceProperties(i, uv, hitNormal, hitTangent, hitBitangent, hitUv);
-        }
-    }            
-    
-    
-    if(isect && tNear > tmin && tNear < tmax)  {
-        vector3 hitPosition = r.PointAt(tNear);
+        real tNear = 999999;
+        for (uint32_t i = 0; i < triangles.size(); i+=3) { 
+            const vector3 &v0 = vertices[triangles[i]]; 
+            const vector3 &v1 = vertices[triangles[i + 1]]; 
+            const vector3 &v2 = vertices[triangles[i + 2]]; 
+            real t = tNear, u, v; 
+            if (RayTriangleIntersect(r, v0, v1, v2, t, u, v) && t < tNear) { 
+                tNear = t; 
+                uv.x = u; 
+                uv.y = v; 
+                isect = true; 
+                GetSurfaceProperties(i, uv, hitNormal, hitTangent, hitBitangent, hitUv);
+            }
+        }            
         
-        // vector2 uv = GetUv(hitPosition);
-        ONB uvw;
-        uvw.InitFromW(hitNormal);
+        
+        if(isect && tNear > tmin && tNear < tmax)  {
+            vector3 hitPosition = r.PointAt(tNear);
+            
+            // vector2 uv = GetUv(hitPosition);
+            ONB uvw;
+            uvw.InitFromW(hitNormal);
 
-        hit.t = tNear;    
-        hit.p = hitPosition;
-        hit.uvw = uvw;
-        hit.color = uvw.U;
-        hit.material = material;
+            hit.t = tNear;    
+            hit.p = hitPosition;
+            hit.uvw = uvw;
+            hit.color = uvw.U;
+            hit.material = material;
 
-        return true;
-    }
-    return false;
+            return true;
+        }
+        return false;
+    } else return false;
+    // return false;
 }
 
 bool TriangleMesh::ShadowHit(Ray r, real tmin, real tmax, real time) const {

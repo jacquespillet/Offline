@@ -46,5 +46,7 @@ inline bool BoundingBox::RayIntersects(const Ray& r, float tmin, float tmax) con
     if(t0 > intervalMin) intervalMin = t0;
     if(t1 < intervalMax) intervalMax = t1;
     if(intervalMin > intervalMin) return false;
+
+    return true;
 }
 

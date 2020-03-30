@@ -13,7 +13,7 @@ public:
 
     virtual bool ExplicitBrdf(const ONB& onb, const vector3& outGoing0, const vector3& outGoing1, rgb& outAlbedo, real& brdfValue) { return false; }
 
-    virtual bool DiffuseDirection(const ONB& onb, const vector3& incident, const vector2& random, rgb& outAlbedo, vector3& outGoing, real& pdf) { return false; }
+    virtual bool DiffuseDirection(const ONB& onb, const vector3& incident, const vector2& random, rgb& outAlbedo, vector3& outGoing, real& pdf, real& brdf) { return false; }
 
     virtual bool SpecularDirection(const ONB& onb, const vector3& incident, const vector2& random, rgb& outAlbedo, vector3& outGoing, real& pdf) { return false; }
 

@@ -21,41 +21,43 @@ bool Renderer::Hit(Ray ray, HitPoint& hitPoint, real time) const {
     return globalHit;
 }
 
-rgb Renderer::GetColor(const Ray& ray, int depth, int currentSample) const {
+
+rgb Renderer::GetColor(const Ray& ray, int depth, int currentSample) const {    
     HitPoint hitPoint;
+    bool dummy_bool = true;
+    float brdf_scale;
+    
     bool hit = Hit(ray, hitPoint, timeSamples[currentSample]);
-    if(hit && depth < 10) {            
-        //Generate out direction
+    if (hit) 
+    {
+        rgb c(0,0,0);
+
+        c += hitPoint.material->EmittedRadiance(hitPoint.uvw, -ray.Direction());
+
         vector3 outDir;
-        rgb hitColor, hitColorBrdf;
-        real brdfValue, pdfValue;
-
-
-        hitPoint.material->DiffuseDirection(hitPoint.uvw, ray.Direction(), brdfSamples[currentSample], hitColor, outDir, pdfValue);        
-        hitPoint.material->ExplicitBrdf(hitPoint.uvw, ray.Direction(), outDir, hitColorBrdf, brdfValue);
-
-        rgb emitted = hitPoint.material->EmittedRadiance(hitPoint.uvw, outDir);
-
-        if(glm::length(emitted) > 0) { 
-            return emitted;
+        rgb hitColor;
+        real pdfValue=1;
+        real brdfValue=1;
+        if(depth < 30 && hitPoint.material->DiffuseDirection(hitPoint.uvw, ray.Direction(), brdfSamples[currentSample], hitColor, outDir, pdfValue, brdfValue)) 
+        {
+            Ray ref(hitPoint.p, outDir);
+            c += brdfValue*hitColor*GetColor(ref, depth+1, currentSample) / pdfValue;
         }
 
-        // Create out ray
-        Ray scatteredRay(hitPoint.p, outDir);
-
-        real cosT = glm::dot(outDir, hitPoint.uvw.W);
-
-        //Rendering equation : 
-        // BRDF * Lo * cosT
-        return brdfValue * (hitColor * GetColor(scatteredRay, depth+1, currentSample));
-    } else {
-        glm::vec3 direction = glm::normalize(ray.Direction());
-        double t = 0.5 * direction.y + 1.0;
-        glm::vec3 backgroundColor = (1.0 - t) * glm::vec3(1, 1, 1) + t * glm::vec3(0.5, 0.7, 1);
-        // rgb backgroundColor = rgb(0);
-        return backgroundColor;
+       return c + ambient * hitPoint.material->AmbientResponse(hitPoint.uvw, ray.Direction());
+    }
+    else {
+        if(skybox.init) {
+            glm::vec3 backgroundColor = skybox.Sample(ray.Direction());
+            return backgroundColor; 
+        } else {
+            rgb backgroundColor = rgb(0);
+            return backgroundColor;
+        }        
     }
 }
+
+
 
 void Renderer::Render(Image& target, Camera& _camera, int _numSamples) {
     numSamples = _numSamples;
@@ -99,6 +101,7 @@ void Renderer::Render(Image& target, Camera& _camera, int _numSamples) {
 		color = glm::min(vector3(1.0f), glm::max(vector3(0.0f), color));
 		target.set(x, y, color);
     }), width * height).Block();
+    std::cout << "HERE" << std::endl;
 	// }
 
 	target.gammaCorrect(2.2);

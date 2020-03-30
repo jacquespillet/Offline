@@ -20,6 +20,9 @@ set(MainWindowSrc
 	Material/DiffuseMaterial.cpp
 	Material/EmissiveMaterial.cpp
 	Material/MetalMaterial.cpp
+	Material/DiffSpecMaterial.cpp
+
+	Texture/Cubemap.cpp
 	)
 
 	

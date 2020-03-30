@@ -28,8 +28,8 @@ set(GLM_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/glm)
 include_directories(${GLM_INC_DIR})
 
 # #stbi
-# set(STBI_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/STB_image)
-# include_directories(${STBI_INC_DIR})
+set(STBI_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/STB_image)
+include_directories(${STBI_INC_DIR})
 
 
 # #Bullets
